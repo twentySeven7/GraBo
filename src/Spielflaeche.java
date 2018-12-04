@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import de.fhwgt.dionarap.model.objects.*;
+
 /**
  * Spielflaeche
  * Initialisierung der Spielflaeche, abgeleitet von JPanel
@@ -13,7 +15,7 @@ import javax.swing.JPanel;
  */
 public class Spielflaeche extends JPanel {
 	private Hauptfenster hauptfenster;
-	private JLabel[][] label_flaeche = new JLabel[10][10];
+	private JLabel[][] label_flaeche;
 
     /**
      * Konstruktor der Spielflaeche vom Typ JPanel
@@ -28,9 +30,13 @@ public class Spielflaeche extends JPanel {
      * Methode, erzeugt die Spielflaeche mit Schachbrettmuster
      */
 	private void addJLabels() {
-		this.setLayout(new GridLayout(10,10));
-		for (int i = 0; i < 10; i++) {
-			for (int k = 0; k < 10; k++) {
+		int sizeY = hauptfenster.getDionaRapModel().getGrid().getGridSizeY();
+		int sizeX = hauptfenster.getDionaRapModel().getGrid().getGridSizeX();
+		label_flaeche = new JLabel[sizeY][sizeX];
+
+		this.setLayout(new GridLayout(sizeY,sizeX));
+		for (int i = 0; i < sizeY; i++) {
+			for (int k = 0; k < sizeX; k++) {
 				label_flaeche[i][k] = new JLabel();
 				if ((i + k) % 2 == 0) { // Jedes zweites Feld wird weiss "angemalt"
 					label_flaeche[i][k].setBackground(Color.BLACK);
@@ -43,5 +49,34 @@ public class Spielflaeche extends JPanel {
 				this.add(label_flaeche[i][k]);
 			}
 		}
+	}
+
+	/*
+	 * Zeichnet alle Spielfiguren/Hindernisse
+	 */
+	public void paintAllPawns(AbstractPawn[] pawns) {
+		for(int i = 0; i < pawns.length; i++) {
+			if(pawns[i] instanceof Obstacle) {
+				label_flaeche[pawns[i].getY()][pawns[i].getX()].setText("H");
+				//invert color
+			}
+			if(pawns[i] instanceof Opponent) {
+				label_flaeche[pawns[i].getY()][pawns[i].getX()].setText("G");
+			}
+			if(pawns[i] instanceof Player) {
+				label_flaeche[pawns[i].getY()][pawns[i].getX()].setText("S");
+			}
+			if(pawns[i] instanceof Destruction) {
+				label_flaeche[pawns[i].getY()][pawns[i].getX()].setText("*");
+			}
+			if(pawns[i] instanceof Vortex) {
+				label_flaeche[pawns[i].getY()][pawns[i].getX()].setBackground(Color.BLUE);
+			}
+			if(pawns[i] instanceof Ammo) {
+				label_flaeche[pawns[i].getY()][pawns[i].getX()].setText("A");
+			}
+
+		}
+
 	}
 }

@@ -22,13 +22,18 @@ public class Navigator extends JWindow{
 	public Navigator(JFrame parent) {
 		super(parent);
 		hauptfenster = (Hauptfenster) parent;
-		Rectangle navigatorPostion = parent.getBounds();
-		this.setLocation((int) (navigatorPostion.getX() + parent.getWidth() + ABSTAND), (int) navigatorPostion.getY());
+		//Rectangle navigatorPostion = parent.getBounds();
+
+		this.setNavLocation();
 
 		Tastatur tastatur = new Tastatur();
 		this.add(tastatur);
 		this.pack();
 		this.setVisible(true);
 
+	}
+
+	public void setNavLocation() {
+		this.setLocation(getParent().getLocation().x + getParent().getWidth() + ABSTAND, getParent().getLocation().y);
 	}
 }
