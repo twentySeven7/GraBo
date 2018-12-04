@@ -79,4 +79,20 @@ public class Spielflaeche extends JPanel {
 		}
 
 	}
+
+	public void clearSpielflaeche() {
+		int zeilen = hauptfenster.getDionaRapModel().getGrid().getGridSizeY();
+		int spalten = hauptfenster.getDionaRapModel().getGrid().getGridSizeX();
+
+		for(int i = 0; i < zeilen; i++) {
+			for(int k = 0; k < spalten; k++) {
+				label_flaeche[i][k].setText(null);
+			}
+		}
+	}
+
+	public void repaintPawns() {
+		this.clearSpielflaeche();
+		this.paintAllPawns(this.hauptfenster.getPawns());
+	}
 }
