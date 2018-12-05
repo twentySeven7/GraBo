@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
  */
 
 public class Tastatur extends JPanel {
+	private String icons[] = {"taste1.gif","taste2.gif","taste3.gif","taste4.gif","taste5.gif","taste6.gif","taste7.gif","taste8.gif","taste9.gif"};
+
 	/**
 	 * Konstruktor der Steuerflaeche vom Typ JPanel Legt den Layout-Manager fest und
 	 * ruft die Methode addJButtons() auf und setzt einen roten Rand
@@ -25,16 +28,19 @@ public class Tastatur extends JPanel {
 		addJButtons();
 		this.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		this.setVisible(true);
-		this.setBorder(BorderFactory.createLineBorder(Color.RED));
 	}
 
 	/**
 	 * Methode, fuegt alle JButtons ein
 	 */
 	private void addJButtons() {
+		String base_dir = System.getProperty("user.dir") + "\\images\\navigator\\";
+
 		JButton[] buttons = new JButton[9];
 		for (int i = 9; i > 0; i--) {
-			buttons[i - 1] = new JButton(Integer.toString(i));
+			buttons[i - 1] = new JButton();
+			buttons[i - 1].setIcon(new ImageIcon(base_dir + icons[i - 1]));
+			buttons[i - 1].setActionCommand(String.valueOf((i)));
 			buttons[i - 1].setPreferredSize(new Dimension(50, 50));
 			if (i == 5) {
 				buttons[i - 1].addActionListener(new ListenerWaffe());

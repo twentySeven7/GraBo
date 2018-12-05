@@ -56,7 +56,7 @@ public class Hauptfenster extends JFrame{
 		dionaRapController = new DionaRapController(dionaRapModel);
 		spielflaeche = new Spielflaeche(this);
 
-		dionaRapModel.addModelChangedEventListener(new ListenerModel());
+		dionaRapModel.addModelChangedEventListener(new ListenerModel(this, spielflaeche));
 
 		pawns = this.dionaRapModel.getAllPawns();
 
@@ -79,5 +79,18 @@ public class Hauptfenster extends JFrame{
 	public DionaRapController getDionaRapController() {
 		// TODO Auto-generated method stub
 		return dionaRapController;
+	}
+
+	public AbstractPawn[] getPawns() {
+		return this.dionaRapModel.getAllPawns();
+	}
+	/*
+	 * Zeichnet das Spielfeld neu, damit man auch sieht, dass der Spieler/Gegner sich bewegen
+	 */
+	public void repaintGame() {
+		spielflaeche.clearSpielflaeche();
+		pawns = dionaRapModel.getAllPawns();
+		spielflaeche.paintAllPawns(pawns);
+
 	}
 }
